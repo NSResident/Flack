@@ -1,6 +1,8 @@
 'use strict'
 
-const BootBot = require('bootbot')
+const BootBot = require('bootbot');
+var constants = require('./constants');
+var config = require('config');
 
 const bot = new BootBot({
 	accessToken: 'EAAEM6NW9EAYBAAu1OAafr3gkX7rSWIZCDGjqRjYn7VCwZBG5gdn33qL8eTxePOvl4cLMr7Ky09rZCZAmHAuZCDM1KzKx8CuvC7M5yoZCinkanZCCAHZBAw63ZCxf1rR9f1MEgMdE2hsNG67NR53A8pClz8ZCfUX6ZB6mIa81JtPQxjebAZDZD',
@@ -15,4 +17,4 @@ bot.on('message', (payload, chat) => {
 	chat.say(`Echo: ${textH}`);
 });
 	
-bot.start(1337);
+bot.start(8088);
