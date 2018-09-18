@@ -1,14 +1,15 @@
 'use strict'
 
 const BootBot = require('bootbot');
-var constants = require('./constants');
+const {Worker, workerData} = require('worker-threads')
 var config = require('config');
-
-const bot = new BootBot({
-	accessToken: 'EAAEM6NW9EAYBAAu1OAafr3gkX7rSWIZCDGjqRjYn7VCwZBG5gdn33qL8eTxePOvl4cLMr7Ky09rZCZAmHAuZCDM1KzKx8CuvC7M5yoZCinkanZCCAHZBAw63ZCxf1rR9f1MEgMdE2hsNG67NR53A8pClz8ZCfUX6ZB6mIa81JtPQxjebAZDZD',
-	verifyToken: 'YEE0LPNMSt3Lk867PiGw',
-	appSecret: '63f3db3dc8fe97981ca22d6f99b480c9'
-});
+console.log(config.get('FACEBOOK_TOKENS'));
+const bot = new BootBot(
+	config.get('FACEBOOK_TOKENS')
+	// accessToken: 'EAAEM6NW9EAYBAAu1OAafr3gkX7rSWIZCDGjqRjYn7VCwZBG5gdn33qL8eTxePOvl4cLMr7Ky09rZCZAmHAuZCDM1KzKx8CuvC7M5yoZCinkanZCCAHZBAw63ZCxf1rR9f1MEgMdE2hsNG67NR53A8pClz8ZCfUX6ZB6mIa81JtPQxjebAZDZD',
+	// verifyToken: 'YEE0LPNMSt3Lk867PiGw',
+	// appSecret: '63f3db3dc8fe97981ca22d6f99b480c9'
+);
 
 bot.on('message', (payload, chat) => {
 
@@ -17,4 +18,4 @@ bot.on('message', (payload, chat) => {
 	chat.say(`Echo: ${textH}`);
 });
 	
-bot.start(8088);
+bot.start(8080);
