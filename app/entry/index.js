@@ -1,7 +1,8 @@
 'use strict'
 
 const BootBot = require('bootbot');
-const {Worker, workerData} = require('worker-threads')
+const Switch = require('../parser/switch');
+// const {Worker, workerData} = require('worker-threads')
 var config = require('config');
 console.log(config.get('FACEBOOK_TOKENS'));
 const bot = new BootBot(
@@ -14,7 +15,11 @@ const bot = new BootBot(
 bot.on('message', (payload, chat) => {
 
 	const textH = payload.message.text;
-	console.log(`User said: ${textH}`);
+
+	//Make this async for promise
+	Switch.function_switch(payload.message.text, payload.sender.id, payload.recipient.id, payload.timestamp);
+
+	//..... .then(Say response based on promise)
 	chat.say(`Echo: ${textH}`);
 });
 	
