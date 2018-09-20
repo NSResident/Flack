@@ -1,6 +1,7 @@
 'use strict'
 
 const BootBot = require('bootbot');
+const singleChat = require('../singleChat/features')
 const GroupChat = require('../groupChat/features')
 const Constants = require('./constants')
 
@@ -14,6 +15,10 @@ function function_switch(message, sender, receiver, ts){
     }
     else if(Constants.REGEX_BIRTHDAY.test(message)){
         console.log("In Birthday");
+    }
+    else if(Constants.REGEX_YELP.test(message)){
+        console.log("In Yelp");
+
     }
 }
 
