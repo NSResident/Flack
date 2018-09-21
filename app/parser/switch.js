@@ -18,7 +18,7 @@ function function_switch(message, sender, receiver, ts){
     }
     else if(Constants.REGEX_YELP.test(message)){
         console.log("In Yelp");
-
+        singleChat.yelpIt(message);
     }
 }
 
