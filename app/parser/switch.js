@@ -7,7 +7,7 @@ const Constants = require('./constants')
 
 //Create promises
 async function function_switch(message, sender, receiver, ts){
-    var botResult;
+    var botResult = 'Didnt work';
     if(Constants.REGEX_FOOD.test(message)){
         console.log("In FOOD");
     }
@@ -19,16 +19,14 @@ async function function_switch(message, sender, receiver, ts){
     }
     else if(Constants.REGEX_YELP.test(message)){
         console.log("In Yelp");
-        var yelpPromise = singleChat.yelpIt(message);
-        yelpPromise.then(result => {
+        // var result = await singleChat.yelpIt(message);
+        return singleChat.yelpIt(message)
+        .then(result => {
            console.log(result);
-           botResult = result;
-        });
-        yelpPromise.catch(() => {
-           throw 'Error';
-        });
+           return result;
+        })
+        .catch(() => {throw "Error"});
     }
-    return botResult;
 }
 
 module.exports.function_switch = function_switch;
