@@ -6,7 +6,8 @@ const GroupChat = require('../groupChat/features')
 const Constants = require('./constants')
 
 //Create promises
-function function_switch(message, sender, receiver, ts){
+async function function_switch(message, sender, receiver, ts){
+    var botResult;
     if(Constants.REGEX_FOOD.test(message)){
         console.log("In FOOD");
     }
@@ -18,8 +19,16 @@ function function_switch(message, sender, receiver, ts){
     }
     else if(Constants.REGEX_YELP.test(message)){
         console.log("In Yelp");
-        singleChat.yelpIt(message);
+        var yelpPromise = singleChat.yelpIt(message);
+        yelpPromise.then(result => {
+           console.log(result);
+           botResult = result;
+        });
+        yelpPromise.catch(() => {
+           throw 'Error';
+        });
     }
+    return botResult;
 }
 
 module.exports.function_switch = function_switch;

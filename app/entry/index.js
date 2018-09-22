@@ -17,10 +17,12 @@ bot.on('message', (payload, chat) => {
 	const textH = payload.message.text;
 
 	//Make this async for promise
-	Switch.function_switch(payload.message.text, payload.sender.id, payload.recipient.id, payload.timestamp);
-
+	var switchPromise = Switch.function_switch(payload.message.text, payload.sender.id, payload.recipient.id, payload.timestamp)
+	switchPromise.then(message =>{
+		chat.say('Worked');
+	});
+	switchPromise.catch(() => chat.say('Didnt work'));
 	//..... .then(Say response based on promise)
-	chat.say(`Echo: ${textH}`);
 });
 	
 bot.start(8080);

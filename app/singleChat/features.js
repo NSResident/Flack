@@ -5,10 +5,12 @@ const config = require('config');
 const constants = require('constants');
 
 //Yelp
-function yelpIt(command) {
+
+
+async function yelpIt(command) {
     var params = command.split(' ');
-    var limitY = 5;
-    axios.get('https://api.yelp.com/v3/businesses/search', {
+    var limitY = 1;
+    var yelpPromise = axios.get('https://api.yelp.com/v3/businesses/search', {
             params : {
                 term : params[1],
                 location : params[2],
@@ -16,29 +18,28 @@ function yelpIt(command) {
             },
             headers : {
                 Authorization : `Bearer ${config.YELP_TOKENS.APIKey}`
+            }});
+    var responseArr = [];
+    yelpPromise.then(response => {
+        for(var i = 0; i < limitY; i++){
+            var restaurant = response.data.businesses[i];
+            if(restaurant.isClosed == true)
+                continue;
+            responseArr[i] = {
+                Name : restaurant.name,
+                Rating : restaurant.rating,
+                Price : restaurant.price,
+                URL : restaurant.url,
+                ImageURL : restaurant.image_url
             }
-        })
-        .then(response => {
-            // console.log(response.data);
-            var responseArr = [];
-            for(var i = 0; i < limitY; i++){
-                var restaurant = response.data.businesses[i];
-                if(restaurant.isClosed == true)
-                    continue;
-                responseArr[i] = {
-                    Name : restaurant.name,
-                    Rating : restaurant.rating,
-                    Price : restaurant.price,
-                    URL : restaurant.url,
-                    ImageURL : restaurant.image_url
-                }
-            }
-            console.log(responseArr);
-        })
-        .catch(e => {
-            console.log('ERROR');
-            console.log(`${e}`);
-        });
+        }
+    })
+    .catch(e => {
+        console.log('ERROR');
+        console.log(`${e}`);
+        throw 'ERROR';
+    });
+    return responseArr;
 }
 
 //Birthdays
